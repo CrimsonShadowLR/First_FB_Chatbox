@@ -1,4 +1,7 @@
 'use strict';
+// Variables
+let pageToken =530694783749159;
+const verifyToken =EAAEd3jfSeHUBAFYfut6yoO5wrLDLzvuRIBO2CdqTOZBYjqRXUtR4t1aMKv0ZCHYPLdj2dXhcflga9VkX5VplHHFukFTsxKxqqeT9RccirZB4fbhghC8hFXaTe78rMsyDBuxfJykEEo8y7epbeZAQFOpytCTfPT4ko8M2kepc8QZDZD;
 
 // Imports dependencies and set up http server
 const
@@ -28,8 +31,6 @@ app.post('/webhook', (req, res) => {
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
-  // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = EAAEd3jfSeHUBAFYfut6yoO5wrLDLzvuRIBO2CdqTOZBYjqRXUtR4t1aMKv0ZCHYPLdj2dXhcflga9VkX5VplHHFukFTsxKxqqeT9RccirZB4fbhghC8hFXaTe78rMsyDBuxfJykEEo8y7epbeZAQFOpytCTfPT4ko8M2kepc8QZDZD
 
     
   // Parse the query params
@@ -41,7 +42,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === verifyToken) {
       
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
