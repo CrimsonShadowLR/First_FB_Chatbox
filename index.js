@@ -2,7 +2,7 @@
 // Variables
 // 
 let verifyToken ="M4sKap0EsUnaLeyenDaQuePocosConocen";
-let pageToken ="EAAEd3jfSeHUBAFYfut6yoO5wrLDLzvuRIBO2CdqTOZBYjqRXUtR4t1aMKv0ZCHYPLdj2dXhcflga9VkX5VplHHFukFTsxKxqqeT9RccirZB4fbhghC8hFXaTe78rMsyDBuxfJykEEo8y7epbeZAQFOpytCTfPT4ko8M2kepc8QZDZD";
+const pageToken ="EAAEd3jfSeHUBAFYfut6yoO5wrLDLzvuRIBO2CdqTOZBYjqRXUtR4t1aMKv0ZCHYPLdj2dXhcflga9VkX5VplHHFukFTsxKxqqeT9RccirZB4fbhghC8hFXaTe78rMsyDBuxfJykEEo8y7epbeZAQFOpytCTfPT4ko8M2kepc8QZDZD";
 
 // Imports dependencies and set up http server
 const
@@ -14,22 +14,31 @@ const
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 // Creates the endpoint for our webhook 
+// Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
  
-    const messagingEvents = req.body.entry[0].messaging;
+  let body = req.body;
 
-    messagingEvents.forEach((event) => {
-        const sender = event.sender.id;
+  // Checks this is an event from a page subscription
+  if (body.object === 'page') {
 
-        if (event.message && event.message.text) {
-            const text = event.message.text.trim().substring(0, 200);
-	    console.log(text);
-            sendTextMessage(sender, text);
-        }
+    // Iterates over each entry - there may be multiple if batched
+    body.entry.forEach(function(entry) {
+
+      // Gets the message. entry.messaging is an array, but 
+      // will only ever contain one message, so we get index 0
+      let webhook_event = entry.messaging[0];
+      console.log(webhook_event);
     });
 
-});
+    // Returns a '200 OK' response to all requests
+    res.status(200).send('EVENT_RECEIVED');
+  } else {
+    // Returns a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404);
+  }
 
+});
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
