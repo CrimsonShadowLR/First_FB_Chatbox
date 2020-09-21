@@ -3,6 +3,8 @@
   "lockfileVersion": 1,
   "scripts": {
     "start": "node index.js",
+    "express": "*",
+    "body-parser": "*",
     "test": "npm test"
   },
   "dependencies": {
