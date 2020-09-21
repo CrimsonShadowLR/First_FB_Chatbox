@@ -23,6 +23,7 @@ app.post('/webhook', (req, res) => {
 
         if (event.message && event.message.text) {
             const text = event.message.text.trim().substring(0, 200);
+	    console.log(text);
             sendTextMessage(sender, text);
         }
     });
