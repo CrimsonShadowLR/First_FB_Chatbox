@@ -1,6 +1,10 @@
 {
   "requires": true,
   "lockfileVersion": 1,
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm test"
+  },
   "dependencies": {
     "accepts": {
       "version": "1.3.7",
